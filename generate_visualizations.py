@@ -32,20 +32,25 @@ def save_graph(fig, name, vis_dir):
     """Save graph with descriptive name and metadata."""
     if name not in GRAPH_NAMES:
         raise ValueError(f"Unknown graph name: {name}")
-        
-    filename = f"{name}.png"
+    
+    # Get the descriptive title
+    title = GRAPH_NAMES[name]
+    
+    # Create filename directly from the title
+    filename = title.lower().replace(' ', '_').replace(':', '').replace(',', '').replace('(', '').replace(')', '') + '.png'
     filepath = os.path.join(vis_dir, filename)
     
     # Add metadata to figure
-    fig.suptitle(GRAPH_NAMES[name], fontsize=14)
+    fig.suptitle(title, fontsize=14)
     
     # Save with high quality settings
     fig.savefig(filepath, dpi=300, bbox_inches='tight', metadata={
-        'Title': GRAPH_NAMES[name],
+        'Title': title,
         'Creator': 'AI Traffic Control System Analysis',
-        'Description': f"Visualization of {GRAPH_NAMES[name].lower()}"
+        'Description': f"Visualization of {title.lower()}"
     })
     
+    print(f"Saved graph: {filename}")
     return filepath
 
 # Find the most recent results directory
@@ -352,7 +357,45 @@ print("To include in your report, use: ![Title](path/to/image.png)")
 
 def get_graph_descriptions():
     """Return a list of all graph descriptions for documentation."""
-    return [f"- {name}.png: {desc}" for name, desc in GRAPH_NAMES.items()]
+    descriptions = []
+    
+    # Add our visualizations descriptions
+    for name, desc in GRAPH_NAMES.items():
+        filename = desc.lower().replace(' ', '_').replace(':', '').replace(',', '').replace('(', '').replace(')', '') + '.png'
+        descriptions.append(f"- {filename}: {desc}")
+    
+    # Add descriptions for graphs created directly by C25D.py
+    c25d_graph_titles = [
+        "Wait Time Distribution by Control Type",
+        "Emergency Vehicle Response Time",
+        "Average Hourly Traffic Volume",
+        "Fuel Consumption per Vehicle",
+        "Emissions per Vehicle",
+        "Average Wait Time by Road Type",
+        "Average Wait Time by Congestion Level",
+        "AI Traffic Control System Improvements (%)",
+        "Average Wait Time by Hour of Day",
+        "AI System Wait Time Reduction by Hour (%)",
+        "Pedestrian and Bicycle Activity by Hour",
+        "Pedestrian and Bicycle Wait Times",
+        "Correlation: Vehicle vs Pedestrian Counts",
+        "Correlation: Vehicle vs Bicycle Counts",
+        "Hourly Wait Time per Vehicle",
+        "Hourly Fuel Consumption per Vehicle",
+        "Hourly Emissions per Vehicle",
+        "Wait Time Trend Over Days",
+        "Traffic Light Cycle Time by Hour",
+        "Distribution of Wait Times",
+        "Emergency Vehicle Time Saving (%)",
+        "Percentage of Wait Time Outliers"
+    ]
+    
+    # Add these to the descriptions
+    for title in c25d_graph_titles:
+        filename = title.lower().replace(' ', '_').replace(':', '').replace(',', '').replace('(', '').replace(')', '') + '.png'
+        descriptions.append(f"- {filename}: {title}")
+    
+    return descriptions
 
 if __name__ == "__main__":
     # Print graph descriptions at the end

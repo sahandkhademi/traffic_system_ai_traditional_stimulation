@@ -41,10 +41,24 @@ coverage.xml
 ehthumbs.db
 Thumbs.db
 
-# Results directory (large files)
-# results/
-# test_results/
+# Project specific
+# Results directories
+#results/*/
+test_results/*/
+rl_results/*/
 
-# Model files
+# Log files
+*.log
+rl_logs/
+
+# Backup files
+*.bak
+*.backup
+*.tmp
+*.temp
+
+# Optional: Comment these out if you want to track model files
+# Model and training data
 # *.pth
+# *.json
 # training_history.json 

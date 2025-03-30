@@ -122,12 +122,13 @@ if 'emergency_preemption_count' in df.columns:
         print(f"  - Improvement from preemption: {improvement:.1f}%")
 
 # 5. Road type and congestion analysis
-print("\n--- EMERGENCY RESPONSE BY ROAD TYPE AND CONGESTION ---")
+print("\n--- EMERGENCY RESPONSE BY INTERSECTION TYPE ---")
 
-road_congestion_emergency = emergency_df.groupby(['control_type', 'road_type', 'congestion_level'])['emergency_wait_time'].agg(['mean', 'std']).reset_index()
+# The 'road_type' column doesn't exist, but 'intersection_type' combines road_type and congestion_level
+intersection_emergency = emergency_df.groupby(['control_type', 'intersection_type'])['emergency_wait_time'].agg(['mean', 'std']).reset_index()
 
-for _, row in road_congestion_emergency.iterrows():
+for _, row in intersection_emergency.iterrows():
     std_value = row['std'] if not np.isnan(row['std']) else 0
-    print(f"{row['control_type'].capitalize()} - {row['road_type'].capitalize()} - {row['congestion_level'].capitalize()}: {row['mean']:.2f} ± {std_value:.2f} seconds")
+    print(f"{row['control_type'].capitalize()} - {row['intersection_type']}: {row['mean']:.2f} ± {std_value:.2f} seconds")
 
 print("\n====== END OF EMERGENCY ANALYSIS ======") 
