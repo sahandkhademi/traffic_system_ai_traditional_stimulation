@@ -42,5 +42,9 @@ ehthumbs.db
 Thumbs.db
 
 # Results directory (large files)
-# Uncomment if you want to exclude results
-# results/ 
+# results/
+# test_results/
+
+# Model files
+# *.pth
+# training_history.json 
