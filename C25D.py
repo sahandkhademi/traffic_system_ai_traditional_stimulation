@@ -19,7 +19,7 @@ import os
 import json
 import time
 
-intersections_number = 100
+intersections_number = 10
 days_number = 7
 
 # Global variable to track current result directory for model saving
@@ -171,7 +171,7 @@ class RoadSegment:
         segment_id: str,
         length: float,  # in meters
         num_lanes: int,
-        lane_width: float = 3.7,
+        lane_width: float = 2,
     ):  # standard lane width in meters
         self.segment_id = segment_id
         self.length = length

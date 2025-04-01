@@ -19,6 +19,112 @@ A comprehensive simulation framework comparing traditional fixed-time traffic li
 - **Data Visualization**: Generates charts and graphs for all key metrics
 - **Reinforcement Learning**: Deep Q-Network (DQN) based traffic light control using PyTorch
 
+## System Architecture
+
+The following flowchart illustrates the main components and data flow of the simulation system:
+
+```mermaid
+graph TD
+    subgraph "Main Control Flow"
+        A[Start Simulation] --> B[run_everything.sh]
+        B --> C[C25D.py]
+        C --> D[Simulation Controller]
+    end
+
+    subgraph "Intersection Components"
+        D --> E[Traditional Control]
+        D --> F[AI Control]
+        
+        E --> G[Fixed Time Signals]
+        F --> H[Adaptive Signals]
+        
+        G --> I[Traffic Flow]
+        H --> I
+        I --> J[Vehicle Management]
+    end
+
+    subgraph "Vehicle Types & Management"
+        J --> K[Regular Vehicles]
+        J --> L[Emergency Vehicles]
+        J --> M[Pedestrians]
+        J --> N[Bicycles]
+        
+        K --> O[Car]
+        K --> P[SUV]
+        K --> Q[Truck]
+    end
+
+    subgraph "AI System Components"
+        F --> R[RL Integration]
+        R --> S[traffic_rl_agent.py]
+        S --> T[AI Model Training]
+        T --> U[Model Evaluation]
+        
+        R --> V[State Collection]
+        V --> W[Traffic Density]
+        V --> X[Wait Times]
+        V --> Y[Emergency Status]
+    end
+
+    subgraph "Analysis Pipeline"
+        D --> Z[Data Collection]
+        Z --> AA[statistical_analysis.py]
+        Z --> AB[emergency_analysis.py]
+        Z --> AC[hourly_analysis.py]
+        
+        AA --> AD[generate_visualizations.py]
+        AB --> AD
+        AC --> AD
+        
+        AD --> AE[Results]
+    end
+
+    subgraph "Road Network"
+        I --> AF[Highway Intersections]
+        I --> AG[Suburban Intersections]
+        
+        AF --> AH[High Traffic]
+        AF --> AI[Medium Traffic]
+        AF --> AJ[Low Traffic]
+        
+        AG --> AK[High Traffic]
+        AG --> AL[Medium Traffic]
+        AG --> AM[Low Traffic]
+    end
+
+    subgraph "Emergency Handling"
+        L --> AN[Detection System]
+        AN --> AO[Traditional Response]
+        AN --> AP[AI Preemption]
+        
+        AO --> AQ[Slow & Yield]
+        AP --> AR[Proactive Signal Change]
+    end
+
+    subgraph "Data Storage"
+        AE --> AS[results/]
+        T --> AT[rl_training_data/]
+        U --> AU[rl_results/]
+        Z --> AV[test_results/]
+    end
+
+    %% Connections between subgraphs
+    H --> R
+    AR --> H
+    AQ --> G
+    I --> Z
+```
+
+The flowchart shows the major components of the system and how they interact:
+- Main control flow starts with the shell script and coordinates the simulation
+- Intersection components handle both traditional and AI-based traffic control
+- Vehicle management system handles different types of vehicles and their behaviors
+- AI system components show the reinforcement learning integration
+- Analysis pipeline processes the simulation data and generates visualizations
+- Road network shows the different types of intersections and traffic conditions
+- Emergency handling shows how both systems respond to emergency vehicles
+- Data storage shows where different types of results are stored
+
 ## Key Findings
 
 - **Wait Time Reduction**: AI systems reduced average vehicle wait times by 73.4%
