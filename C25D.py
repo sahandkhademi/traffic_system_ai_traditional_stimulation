@@ -171,7 +171,7 @@ class RoadSegment:
         segment_id: str,
         length: float,  # in meters
         num_lanes: int,
-        lane_width: float = 2,
+        lane_width: float = 3.7,
     ):  # standard lane width in meters
         self.segment_id = segment_id
         self.length = length

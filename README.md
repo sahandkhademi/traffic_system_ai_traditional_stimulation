@@ -1,6 +1,6 @@
 # AI Traffic Control System Simulation
 
-A comprehensive simulation framework comparing traditional fixed-time traffic light systems with AI-driven adaptive systems across multiple intersections and time periods. This project demonstrates significant improvements in traffic efficiency, emergency response times, and environmental metrics through AI-based traffic management.
+This repository contains the code and data used for the simulation used in the reseach paper that was written by for Vienna International Science and Engineering Fair, evaluating the effectiveness of AI-controlled traffic light systems compared to the traditional counterparts. 
 
 ## Features
 
@@ -18,6 +18,7 @@ A comprehensive simulation framework comparing traditional fixed-time traffic li
 - **Statistical Analysis**: Detailed statistical comparisons including effect sizes and significance tests
 - **Data Visualization**: Generates charts and graphs for all key metrics
 - **Reinforcement Learning**: Deep Q-Network (DQN) based traffic light control using PyTorch
+
 
 ## System Architecture
 
@@ -115,16 +116,6 @@ graph TD
     I --> Z
 ```
 
-The flowchart shows the major components of the system and how they interact:
-- Main control flow starts with the shell script and coordinates the simulation
-- Intersection components handle both traditional and AI-based traffic control
-- Vehicle management system handles different types of vehicles and their behaviors
-- AI system components show the reinforcement learning integration
-- Analysis pipeline processes the simulation data and generates visualizations
-- Road network shows the different types of intersections and traffic conditions
-- Emergency handling shows how both systems respond to emergency vehicles
-- Data storage shows where different types of results are stored
-
 ## Key Findings
 
 - **Wait Time Reduction**: AI systems reduced average vehicle wait times by 73.4%
@@ -142,7 +133,7 @@ The flowchart shows the major components of the system and how they interact:
 - Seaborn
 - SciPy
 - tqdm
-- PyTorch (for reinforcement learning)
+- PyTorch
 
 ## Project Structure
 
@@ -166,6 +157,13 @@ C25D/
 ```
 
 ## Usage Instructions
+
+### Running Everything
+
+```bash
+# Run the main simulation
+./run_everything.sh
+```
 
 ### Running the Main Simulation
 
@@ -229,47 +227,6 @@ The simulation results are stored in timestamped directories under `results/`, w
 - CSV data files with raw simulation data
 - Visualization images for key metrics
 - Summary reports in markdown format
-
-Reinforcement learning results are stored in timestamped directories under `rl_results/`, including:
-
-- Training statistics and plots
-- Evaluation metrics
-- Comparison reports
-- Model checkpoints
-
-## Reinforcement Learning Implementation
-
-The project implements deep reinforcement learning (RL) for traffic control, offering a more advanced approach than rule-based systems:
-
-### DQN Architecture
-
-- **State Space**: Traffic conditions, vehicle counts, waiting times, time of day, and emergency vehicles
-- **Action Space**: Green light durations (discrete choices)
-- **Reward Function**: Combination of wait time reduction, emergency vehicle prioritization, and efficiency metrics
-- **Network Architecture**: Dueling DQN with prioritized experience replay
-
-### RL Training Process
-
-1. **Data Collection**: The simulation environment provides state transitions, actions, and rewards
-2. **Experience Replay**: Stores and randomly samples past experiences to break correlation
-3. **Dueling Networks**: Separates state value and action advantage estimation
-4. **Target Network**: Stabilizes training by providing fixed Q-targets
-
-### Benefits of RL Approach
-
-- **Adaptability**: Learns optimal strategies for different traffic patterns
-- **Generalization**: Performs well across different intersection types and traffic conditions
-- **Online Learning**: Can continue improving with more interaction data
-- **Complex Decision Making**: Balances multiple objectives (wait times, emergency vehicles, fuel efficiency)
-
-## How to Extend
-
-The simulation can be extended by:
-
-1. Modifying `C25D.py` to adjust traffic parameters or add new metrics
-2. Creating additional analysis scripts to examine specific aspects
-3. Enhancing visualization options in `generate_visualizations.py`
-4. Extending the RL model in `traffic_rl_agent.py` with new algorithms
 
 ## License
 
