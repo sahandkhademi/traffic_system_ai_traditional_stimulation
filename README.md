@@ -230,4 +230,8 @@ The simulation results are stored in timestamped directories under `results/`, w
 
 ## License
 
+We would like to acknowledge the use of Cursor (Anysphere Inc., 2025) for its assistance in developing and debugging the code for the simulation.
+
+## License
+
 [MIT License](LICENSE)
