@@ -120,9 +120,8 @@ graph TD
 
 - **Wait Time Reduction**: AI systems reduced average vehicle wait times by 73.4%
 - **Emergency Response**: Emergency vehicle wait times decreased by 62.0%
-- **Fuel Efficiency**: Fuel consumption per vehicle reduced by 41.3%
-- **Environmental Impact**: CO₂ emissions reduced by 59.2%
-- **Emergency Vehicle Preemption**: AI systems detected and preemptively responded to 59.8% of emergency vehicles
+- **Fuel Efficiency**: Fuel consumption per vehicle reduced by 41.2%
+- **Environmental Impact**: CO₂ emissions reduced by 58.8%
 
 ## Requirements
 

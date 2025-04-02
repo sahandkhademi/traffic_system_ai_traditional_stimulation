@@ -19,7 +19,7 @@ import os
 import json
 import time
 
-intersections_number = 10
+intersections_number = 12
 days_number = 7
 
 # Global variable to track current result directory for model saving
