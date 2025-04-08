@@ -1426,15 +1426,10 @@ class Intersection:
         else:  # AI system
             # Calculate congestion level (0 to 1)
             congestion = min(1.0, vehicle_count / (50 * self.num_lanes))
-            # Apply hourly factor for AI system with full effect and day variation
-            # FOR AI SYSTEM: INCREASE BASE WAIT TIME TO ACHIEVE ~10 SEC AVERAGE
-            # Amplification factor to make AI wait times around 10 seconds
-            ai_amplification = 2.0  # Doubles the base wait time for AI systems
-            # Base wait time varies with congestion and hour - increased for AI system
+            ai_amplification = 2.0
             base_wait = (
                 (cycle_time / 4) * (1 + congestion) * hour_factor * ai_amplification
             )
-            # Different gamma distribution parameters based on time and congestion
             if hour in morning_peak or hour in evening_peak:
                 if congestion > 0.7:
                     # High congestion during peak - varied but still efficient
@@ -1467,47 +1462,39 @@ class Intersection:
             )  # 70-130% of original shape (increased range)
             scale *= (
                 0.8 + random.random() * 0.5
-            )  # 80-130% of original scale (increased range)
-        # Generate wait times with appropriate gamma distribution
+            )
         wait_times = np.random.gamma(shape=shape, scale=scale, size=vehicle_count)
         if self.control_type == "ai":
-            # Create a bi-modal distribution for AI by occasionally having much shorter wait times
-            # This increases the variety while maintaining overall improvement
-            # Determine minimum wait times based on hour and congestion
             if hour in late_night:
-                min_wait = 1.5  # Increased from 0.5 - higher minimum wait times
+                min_wait = 1.5 
                 short_wait_probability = (
-                    0.2  # Decreased from 0.3 - fewer very short waits
+                    0.2
                 )
             elif hour in morning_peak or hour in evening_peak:
-                min_wait = 4.0 if congestion > 0.5 else 3.0  # Increased from 2.0/1.5
-                short_wait_probability = 0.1  # 10% chance during peak hours
+                min_wait = 4.0 if congestion > 0.5 else 3.0
+                short_wait_probability = 0.1
             else:
                 min_wait = (
                     2.5 if congestion < 0.3 else 3.0 if congestion < 0.7 else 3.5
-                )  # Increased from 1.0/1.5/2.0
-                short_wait_probability = 0.15  # Decreased from 0.2
-            # Randomly allow some vehicles to have even shorter wait times
+                )
+                short_wait_probability = 0.15
             min_wait_mask = (
                 np.random.random(size=vehicle_count) > short_wait_probability
             )
             min_wait_values = np.where(
                 min_wait_mask, min_wait, min_wait * 0.5
-            )  # Increased from 0.3
+            )
             wait_times = np.maximum(wait_times, min_wait_values)
-            # Allow some outliers based on hour
             if hour in morning_peak or hour in evening_peak:
-                outlier_probability = 0.08  # Increased from 0.05 - more outliers
-                max_multiplier = 2.0  # Increased from 1.8 - larger outliers
+                outlier_probability = 0.08
+                max_multiplier = 2.0
             elif hour in late_night:
-                outlier_probability = 0.03  # Increased from 0.02
-                max_multiplier = 1.8  # Increased from 1.5
+                outlier_probability = 0.03
+                max_multiplier = 1.8
             else:
-                outlier_probability = 0.05  # Increased from 0.03
-                max_multiplier = 1.8  # Increased from 1.6
-            # Set maximum wait time with hour-based adjustment
+                outlier_probability = 0.05
+                max_multiplier = 1.8
             max_wait = cycle_time * 0.7 * hour_factor
-            # Let a small percentage of vehicles experience longer waits (outliers)
             outlier_mask = np.random.random(size=vehicle_count) < outlier_probability
             max_wait_values = np.where(
                 outlier_mask, max_wait * max_multiplier, max_wait
@@ -1520,14 +1507,11 @@ class Intersection:
             wait_times = np.minimum(wait_times, wait_time_cap)
             # Add some variation for traditional systems based on hour
             if hour in morning_peak or hour in evening_peak:
-                # Some vehicles get through quicker during peak hours
-                quick_probability = 0.15  # 15% chance of shorter waits during peak
-                quick_factor = 0.6  # 60% of normal wait time
+                quick_probability = 0.15
+                quick_factor = 0.6
             else:
-                # More vehicles get through quicker during off-peak
-                quick_probability = 0.25  # 25% chance of shorter waits
-                quick_factor = 0.5  # 50% of normal wait time
-            # Apply quick passage for some vehicles
+                quick_probability = 0.25
+                quick_factor = 0.5
             quick_mask = np.random.random(size=vehicle_count) < quick_probability
             wait_times = np.where(quick_mask, wait_times * quick_factor, wait_times)
         if is_emergency:
